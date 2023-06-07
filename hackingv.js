@@ -48,7 +48,7 @@ class Game{
   
   displayPasswordList(){
     this.passwordList = passwordList.generatePasswordList()
-    this.passwordList = passwordList.passwordsGenerated
+    this.passwordList = passwordList.embeddedPasswords
     this.displayLine(this.passwordList)
   }
   
@@ -58,6 +58,7 @@ class Passwords{
   constructor(){
     this.passwordsGenerated = []
     this.samplePasswords = []
+    this.embeddedPasswords = []
   }
   generatePasswordList(){
     this.samplePasswords.push('PROVIDE', 'SETTING', 'CANTINA', 'CUTTING', 'HUNTERS', 'SURVIVE',  'HEARING', 'HUNTING', 'REALIZE', 'NOTHING', 'OVERLAP', 'FINDING', 'PUTTING', 'NURTURE', 'RELIEVE', 'DESTROY', 'HABITAT', 'ICEBERG', 'VACCINE', 'VACANCY', 'ABIDING', 'ABILITY');
@@ -66,11 +67,15 @@ class Passwords{
       while(this.passwordsGenerated.includes(this.selection)){
         this.selection = random(this.samplePasswords)
       }
+      this.passwordsGenerated.push(this.selection);
       /*if(this.passwordsGenerated.includes(this.selection)){
         this.selection = random(this.samplePasswords);
       }*/
+      
+    
       this.embedSelection = this.embedPasswordList(this.selection, 20);
-      this.passwordsGenerated.push(this.embedSelection);
+      this.embeddedPasswords.push(this.embedSelection)
+      console.log(this.embeddedPasswords)
       
     }
     this.passwordsGenerated.push('');
@@ -93,8 +98,7 @@ class Passwords{
     }
   
     this.embeddedPassword = this.embedding.join('');
-    console.log(this.embeddedPassword);
-    console.log(this.embeddedPassword.length);
+    return this.embeddedPassword
 
   }
   
