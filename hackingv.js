@@ -20,12 +20,14 @@ class Game{
     this.attemptsLeft = 4;
     this.location = [10, 20];
     this.textOffset = textSize() * 1.25;
+    this.passwordList = passwordList.generatePasswordList()
+    this.passwordList = passwordList.passwordsGenerated
 
   }
   
   play(){
     this.displayHeader();
-    this.passwordList = passwordList.generatePasswordList()
+    console.log(this.passwordList)
     
   } 
   
@@ -48,23 +50,22 @@ class Game{
 
 class Passwords{
   constructor(){
-    this.passwordList = []
+    this.passwordsGenerated = []
     this.samplePasswords = []
   }
   generatePasswordList(){
     this.samplePasswords.push('PROVIDE', 'SETTING', 'CANTINA', 'CUTTING', 'HUNTERS', 'SURVIVE',  'HEARING', 'HUNTING', 'REALIZE', 'NOTHING', 'OVERLAP', 'FINDING', 'PUTTING', 'NURTURE', 'RELIEVE', 'DESTROY', 'HABITAT', 'ICEBERG', 'VACCINE', 'VACANCY', 'ABIDING', 'ABILITY');
-    for(; this.passwordList.length < 13;){
+    for(; this.passwordsGenerated.length < 13;){
       let selection = random(this.samplePasswords);
-      if(this.passwordList.includes(selection)){
+      if(this.passwordsGenerated.includes(selection)){
         let selection = random(this.samplePasswords);
       }
       else{
-      this.passwordList.push(selection)
+      this.passwordsGenerated.push(selection)
       }
     }
-    this.passwordList.push('')
-    console.log(this.passwordList)
+    this.passwordsGenerated.push('')
+
   }
   
 }
-
