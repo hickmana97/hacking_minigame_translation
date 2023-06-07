@@ -28,6 +28,7 @@ class Game{
   play(){
     this.displayHeader();
     this.displayPasswordList();
+    this.getGuesses();
     
     
   } 
@@ -52,6 +53,27 @@ class Game{
     this.displayLine(this.passwordList)
   }
   
+  getGuesses(){
+    this.guessPrompt = ['ENTER PASSWORD >']
+    this.displayLine(this.guessPrompt)
+    this.inp = createInput('')
+    this.inp.position(this.location[0] + 175, this.location[1] - (this.textOffset * 1.75))
+    this.enterPressed = this.checkEnter()
+    
+  }
+  
+  checkEnter(){
+    keyPressed();{
+      if(keyCode === ENTER){
+        return true
+      }
+      else{
+        return false
+      }
+    }
+  }
+    
+  
 }
 
 class Passwords{
@@ -68,17 +90,15 @@ class Passwords{
         this.selection = random(this.samplePasswords)
       }
       this.passwordsGenerated.push(this.selection);
-      /*if(this.passwordsGenerated.includes(this.selection)){
-        this.selection = random(this.samplePasswords);
-      }*/
-      
     
       this.embedSelection = this.embedPasswordList(this.selection, 20);
       this.embeddedPasswords.push(this.embedSelection)
-      console.log(this.embeddedPasswords)
       
     }
-    this.passwordsGenerated.push('');
+    this.embeddedPasswords.push('');
+    var correctPassword = random(this.passwordsGenerated)
+    console.log(correctPassword)
+    
 
   }
   
