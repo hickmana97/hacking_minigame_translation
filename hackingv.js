@@ -6,7 +6,7 @@ function setup() {
   stroke(2, 216, 24);
   strokeWeight(1);
   fill(2, 216, 24);
-  var passwordArray = [];
+  passwordList = new Passwords();
   game = new Game();
 }
 
@@ -25,6 +25,8 @@ class Game{
   
   play(){
     this.displayHeader();
+    this.passwordList = passwordList.generatePasswordList()
+    
   } 
   
   displayHeader(){
@@ -46,15 +48,22 @@ class Game{
 
 class Passwords{
   constructor(){
-    this.passwordList = passwordArray;
-    this.passwordList = this.generatePasswordList();
+    this.passwordList = []
     this.samplePasswords = []
   }
   generatePasswordList(){
     this.samplePasswords.push('PROVIDE', 'SETTING', 'CANTINA', 'CUTTING', 'HUNTERS', 'SURVIVE',  'HEARING', 'HUNTING', 'REALIZE', 'NOTHING', 'OVERLAP', 'FINDING', 'PUTTING', 'NURTURE', 'RELIEVE', 'DESTROY', 'HABITAT', 'ICEBERG', 'VACCINE', 'VACANCY', 'ABIDING', 'ABILITY');
-    for(let i=0; i < 13; i++){
-      this.passwordList.push(random(this.samplePasswords))
+    for(; this.passwordList.length < 13;){
+      let selection = random(this.samplePasswords);
+      if(this.passwordList.includes(selection)){
+        let selection = random(this.samplePasswords);
+      }
+      else{
+      this.passwordList.push(selection)
+      }
     }
+    this.passwordList.push('')
+    console.log(this.passwordList)
   }
   
 }
