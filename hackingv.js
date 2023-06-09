@@ -1,3 +1,5 @@
+//let lineInterval
+
 function setup() {
   createCanvas(600, 500);
   background('black');
@@ -8,6 +10,7 @@ function setup() {
   fill(2, 216, 24);
   passwordList = new Passwords();
   game = new Game();
+  //lineInterval = setInterval(() => game.displayLine(), 1000);
 }
 
 function draw(){
@@ -35,16 +38,20 @@ class Game{
   
   displayHeader(){
     this.header = ['DEBUG MODE', this.attemptsLeft + ' ATTEMPTS LEFT', ''];
-    this.displayLine(this.header);
+    //setInterval(this.displayLine(this.header), 1000);
   }
   
+  
   displayLine(string){
-    for(let item of string){
-      text(item, this.location[0], this.location[1]);
-      this.location[1] = this.location[1] + this.textOffset;
-    }
-    redraw()
-
+    
+      for(let item of string){
+        setInterval(() => {
+        text(item, this.location[0], this.location[1]);
+        this.location[1] = this.location[1] + this.textOffset;
+        
+        }, 1000)
+        redraw()
+      }
   }
   
   displayPasswordList(){
@@ -57,12 +64,12 @@ class Game{
     this.guessPrompt = ['ENTER PASSWORD >']
     this.displayLine(this.guessPrompt)
     this.inp = createInput('')
-    this.inp.position(this.location[0] + 175, this.location[1] - (this.textOffset * 1.75))
-    this.enterPressed = this.checkEnter()
+    this.inp.position(this.location[0] + 175, this.location[1] - (this.textOffset * 1.82))
+    //this.enterPressed = this.checkEnter()
     
   }
   
-  checkEnter(){
+  /*checkEnter(){
     keyPressed();{
       if(keyCode === ENTER){
         return true
@@ -71,7 +78,7 @@ class Game{
         return false
       }
     }
-  }
+  }*/
     
   
 }
@@ -123,3 +130,10 @@ class Passwords{
   }
   
 }
+
+/*function sleep(millisecondsDuration)
+{
+  return new Promise((resolve) => {
+    setTimeout(resolve, millisecondsDuration);
+  })
+}*/
