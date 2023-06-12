@@ -37,34 +37,39 @@ class Game{
   } 
   
   displayHeader(){
+    let i = 0
     this.header = ['DEBUG MODE', this.attemptsLeft + ' ATTEMPTS LEFT', ''];
+    this.header.forEach((item, index) => setTimeout(() => this.displayLine(item), index * 1000))
     //setInterval(this.displayLine(this.header), 1000);
+    //clearInterval()
   }
   
   
   displayLine(string){
+    this.string = string
+    console.log(this.string)
     
-      for(let item of string){
-        setInterval(() => {
-        text(item, this.location[0], this.location[1]);
-        this.location[1] = this.location[1] + this.textOffset;
-        
-        }, 1000)
-        redraw()
-      }
-  }
+    
+      text(this.string, this.location[0], this.location[1])
+      this.location[1] += this.textOffset
+    }
+  
+  
   
   displayPasswordList(){
     this.passwordList = passwordList.generatePasswordList()
     this.passwordList = passwordList.embeddedPasswords
-    this.displayLine(this.passwordList)
+    this.passwordList.forEach((item, index) => setTimeout(() => this.displayLine(item), index * 1000))
+    //this.displayLine(this.passwordList)
   }
   
   getGuesses(){
     this.guessPrompt = ['ENTER PASSWORD >']
-    this.displayLine(this.guessPrompt)
+    this.guessPrompt.forEach((item, index) => setTimeout(() => this.displayLine(item), index * 1000))
+    //this.displayLine(this.guessPrompt)
     this.inp = createInput('')
     this.inp.position(this.location[0] + 175, this.location[1] - (this.textOffset * 1.82))
+    
     //this.enterPressed = this.checkEnter()
     
   }
