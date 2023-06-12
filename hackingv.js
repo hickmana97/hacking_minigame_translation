@@ -37,7 +37,6 @@ class Game{
   } 
   
   displayHeader(){
-    let i = 0
     this.header = ['DEBUG MODE', this.attemptsLeft + ' ATTEMPTS LEFT', ''];
     this.header.forEach((item, index) => setTimeout(() => this.displayLine(item), index * 1000))
     //setInterval(this.displayLine(this.header), 1000);
