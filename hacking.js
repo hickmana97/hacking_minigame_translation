@@ -1,0 +1,113 @@
+//let lineInterval
+
+function setup() {
+  createCanvas(600, 500);
+  background('black');
+  textFont('Courier New');
+  
+  textSize(17)
+  stroke(2, 216, 24);
+  strokeWeight(1);
+  fill(2, 216, 24);
+  
+  passwordList = new Passwords();
+  //lineInterval = setInterval(() => game.displayLine(), 1000);
+}
+
+function draw(){
+  noLoop()
+  playGame();
+}
+
+function playGame(){
+  var attemptsLeft = 4
+  var location = [10, 20]
+  var textOffset = textSize() * 1.25
+  displayHeader(attemptsLeft, location, textOffset);
+  displayPasswordList(location, textOffset);
+  getGuesses(location, textOffset);
+}
+
+function displayHeader(attemptsLeft, location, textOffset){
+  header = ['DEBUG MODE', attemptsLeft + ' ATTEMPTS LEFT', ''];
+  displayLine(header, location, textOffset)
+}
+
+function displayLine(string, location, textOffset){
+  console.log(string) 
+  for(let line of string){
+    text(string, location[0], location[1])
+    location[1] += textOffset
+  }
+}
+
+function displayPasswordList(location, textOffset){
+  let newPasswordList = passwordList.generatePasswordList()
+  newPasswordList = passwordList.embeddedPasswords
+  displayLine(newPasswordList, location, textOffset)
+}
+
+function getGuesses(location, textOffset){
+  let guessPrompt = ['ENTER PASSWORD >']
+  guessPrompt.forEach((item, index) => setTimeout(() => displayLine(item), index * 1000))
+    //this.displayLine(this.guessPrompt)
+  let inp = createInput('')
+  inp.position(location[0] + 175, location[1] - (textOffset * 1.82))
+}
+
+
+
+class Passwords{
+  constructor(){
+    this.passwordsGenerated = []
+    this.samplePasswords = []
+    this.embeddedPasswords = []
+  }
+  generatePasswordList(){
+    this.samplePasswords.push('PROVIDE', 'SETTING', 'CANTINA', 'CUTTING', 'HUNTERS', 'SURVIVE',  'HEARING', 'HUNTING', 'REALIZE', 'NOTHING', 'OVERLAP', 'FINDING', 'PUTTING', 'NURTURE', 'RELIEVE', 'DESTROY', 'HABITAT', 'ICEBERG', 'VACCINE', 'VACANCY', 'ABIDING', 'ABILITY');
+    for(; this.passwordsGenerated.length < 13;){
+      this.selection = random(this.samplePasswords);
+      while(this.passwordsGenerated.includes(this.selection)){
+        this.selection = random(this.samplePasswords)
+      }
+      this.passwordsGenerated.push(this.selection);
+    
+      this.embedSelection = this.embedPasswordList(this.selection, 20);
+      this.embeddedPasswords.push(this.embedSelection)
+      
+    }
+    this.embeddedPasswords.push('');
+    var correctPassword = random(this.passwordsGenerated)
+    console.log(correctPassword)
+    
+
+  }
+  
+  embedPasswordList(word, size){
+    this.filler = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '~', '[', ']', '{', '}'];
+    this.embedding = [];
+    this.wordLength = word.length;
+    this.splitIndex = floor(random(0, size - this.wordLength));
+    for(let i = 0; i < this.splitIndex + 1; i++){
+      this.embedding.push(random(this.filler));
+    }
+    
+    this.embedding = this.embedding.concat(word);
+    
+    for(let i = this.wordLength + this.splitIndex; i < size - 1; i++){
+      this.embedding.push(random(this.filler));
+    }
+  
+    this.embeddedPassword = this.embedding.join('');
+    return this.embeddedPassword
+
+  }
+  
+}
+
+/*function sleep(millisecondsDuration)
+{
+  return new Promise((resolve) => {
+    setTimeout(resolve, millisecondsDuration);
+  })
+}*/
