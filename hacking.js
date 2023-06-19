@@ -4,12 +4,10 @@ function setup() {
   createCanvas(600, 500);
   background('black');
   textFont('Courier New');
-  
   textSize(17)
   stroke(2, 216, 24);
   strokeWeight(1);
   fill(2, 216, 24);
-  
   passwordList = new Passwords();
   //lineInterval = setInterval(() => game.displayLine(), 1000);
 }
@@ -23,6 +21,7 @@ function playGame(){
   var attemptsLeft = 4
   var location = [10, 20]
   var textOffset = textSize() * 1.25
+  var headerPrinted = false
   displayHeader(attemptsLeft, location, textOffset);
   displayPasswordList(location, textOffset);
   getGuesses(location, textOffset);
@@ -30,13 +29,20 @@ function playGame(){
 
 function displayHeader(attemptsLeft, location, textOffset){
   header = ['DEBUG MODE', attemptsLeft + ' ATTEMPTS LEFT', ''];
-  displayLine(header, location, textOffset)
+  header.forEach((item, index) => setTimeout(() => {
+    displayLine(item, location, textOffset);
+    if(index >= (header.length - 1)){
+      headerPrinted = true
+    }
+    
+  }, index * 500))
+  //displayLine(header, location, textOffset)
 }
 
 function displayLine(string, location, textOffset){
   console.log(string) 
   for(let line of string){
-    text(string, location[0], location[1])
+    text(line, location[0], location[1])
     location[1] += textOffset
   }
 }
@@ -49,7 +55,7 @@ function displayPasswordList(location, textOffset){
 
 function getGuesses(location, textOffset){
   let guessPrompt = ['ENTER PASSWORD >']
-  guessPrompt.forEach((item, index) => setTimeout(() => displayLine(item), index * 1000))
+  displayLine(guessPrompt, location, textOffset)
     //this.displayLine(this.guessPrompt)
   let inp = createInput('')
   inp.position(location[0] + 175, location[1] - (textOffset * 1.82))
