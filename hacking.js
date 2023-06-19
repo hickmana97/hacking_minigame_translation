@@ -22,9 +22,22 @@ function playGame(){
   var location = [10, 20]
   var textOffset = textSize() * 1.25
   var headerPrinted = false
-  displayHeader(attemptsLeft, location, textOffset);
-  displayPasswordList(location, textOffset);
-  getGuesses(location, textOffset);
+  var passwordsPrinted = false
+  printGameText(attemptsLeft, location, textOffset)
+  
+  //displayPasswordList(location, textOffset);
+  //getGuesses(location, textOffset);
+}
+
+function printGameText(attemptsLeft, location, textOffset){
+  if(headerPrinted === false){
+    displayHeader(attemptsLeft, location, textOffset);
+  }
+  else{printGameText(attemptsLeft, location, textOffset)}
+  if(passwordsPrinted === false && headerPrinted === true){
+    displayPasswordList(location, textOffset)
+  }
+  else{printGameText(attemptsLeft, location, textOffset)}
 }
 
 function displayHeader(attemptsLeft, location, textOffset){
@@ -41,26 +54,32 @@ function displayHeader(attemptsLeft, location, textOffset){
 
 function displayLine(string, location, textOffset){
   console.log(string) 
-  for(let line of string){
-    text(line, location[0], location[1])
+  
+    text(string, location[0], location[1])
     location[1] += textOffset
-  }
+  
 }
 
 function displayPasswordList(location, textOffset){
   let newPasswordList = passwordList.generatePasswordList()
   newPasswordList = passwordList.embeddedPasswords
-  displayLine(newPasswordList, location, textOffset)
+  newPasswordList.forEach((item, index) => setTimeout(() => {
+    displayLine(item, location, textOffset);
+    if(index >= (newPasswordList.length - 1)){
+      passwordsPrinted = true
+    }
+    
+  }, index * 500))
 }
 
-function getGuesses(location, textOffset){
+/*function getGuesses(location, textOffset){
   let guessPrompt = ['ENTER PASSWORD >']
   displayLine(guessPrompt, location, textOffset)
     //this.displayLine(this.guessPrompt)
   let inp = createInput('')
   inp.position(location[0] + 175, location[1] - (textOffset * 1.82))
 }
-
+*/
 
 
 class Passwords{
