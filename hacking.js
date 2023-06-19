@@ -1,4 +1,6 @@
 //let lineInterval
+let headerPrinted = false
+let passwordsPrinted = false
 
 function setup() {
   createCanvas(600, 500);
@@ -21,8 +23,7 @@ function playGame(){
   var attemptsLeft = 4
   var location = [10, 20]
   var textOffset = textSize() * 1.25
-  var headerPrinted = false
-  var passwordsPrinted = false
+  
   printGameText(attemptsLeft, location, textOffset)
   
   //displayPasswordList(location, textOffset);
@@ -33,11 +34,6 @@ function printGameText(attemptsLeft, location, textOffset){
   if(headerPrinted === false){
     displayHeader(attemptsLeft, location, textOffset);
   }
-  else{printGameText(attemptsLeft, location, textOffset)}
-  if(passwordsPrinted === false && headerPrinted === true){
-    displayPasswordList(location, textOffset)
-  }
-  else{printGameText(attemptsLeft, location, textOffset)}
 }
 
 function displayHeader(attemptsLeft, location, textOffset){
@@ -46,8 +42,8 @@ function displayHeader(attemptsLeft, location, textOffset){
     displayLine(item, location, textOffset);
     if(index >= (header.length - 1)){
       headerPrinted = true
+      displayPasswordList(location, textOffset)
     }
-    
   }, index * 500))
   //displayLine(header, location, textOffset)
 }
@@ -63,13 +59,15 @@ function displayLine(string, location, textOffset){
 function displayPasswordList(location, textOffset){
   let newPasswordList = passwordList.generatePasswordList()
   newPasswordList = passwordList.embeddedPasswords
-  newPasswordList.forEach((item, index) => setTimeout(() => {
-    displayLine(item, location, textOffset);
-    if(index >= (newPasswordList.length - 1)){
-      passwordsPrinted = true
-    }
-    
-  }, index * 500))
+  if(headerPrinted){
+    newPasswordList.forEach((item, index) => setTimeout(() => {
+      displayLine(item, location, textOffset);
+      if(index >= (newPasswordList.length - 1)){
+        passwordsPrinted = true
+      }
+
+    }, index * 500))
+  }
 }
 
 /*function getGuesses(location, textOffset){
