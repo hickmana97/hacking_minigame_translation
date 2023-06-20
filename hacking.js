@@ -11,7 +11,6 @@ function setup() {
   strokeWeight(1);
   fill(2, 216, 24);
   passwordList = new Passwords();
-  //lineInterval = setInterval(() => game.displayLine(), 1000);
 }
 
 function draw(){
@@ -26,8 +25,6 @@ function playGame(){
   
   printGameText(attemptsLeft, location, textOffset)
   
-  //displayPasswordList(location, textOffset);
-  //getGuesses(location, textOffset);
 }
 
 function printGameText(attemptsLeft, location, textOffset){
@@ -42,7 +39,7 @@ function displayHeader(attemptsLeft, location, textOffset){
     displayLine(item, location, textOffset);
     if(index >= (header.length - 1)){
       headerPrinted = true
-      displayPasswordList(location, textOffset)
+      displayPasswordList(attemptsLeft, location, textOffset)
     }
   }, index * 500))
   //displayLine(header, location, textOffset)
@@ -56,7 +53,7 @@ function displayLine(string, location, textOffset){
   
 }
 
-function displayPasswordList(location, textOffset){
+function displayPasswordList(attemptsLeft, location, textOffset){
   let newPasswordList = passwordList.generatePasswordList()
   newPasswordList = passwordList.embeddedPasswords
   if(headerPrinted){
@@ -64,20 +61,34 @@ function displayPasswordList(location, textOffset){
       displayLine(item, location, textOffset);
       if(index >= (newPasswordList.length - 1)){
         passwordsPrinted = true
+        getGuesses(attemptsLeft, location, textOffset)
       }
 
     }, index * 500))
   }
 }
 
-/*function getGuesses(location, textOffset){
-  let guessPrompt = ['ENTER PASSWORD >']
-  displayLine(guessPrompt, location, textOffset)
-    //this.displayLine(this.guessPrompt)
-  let inp = createInput('')
-  inp.position(location[0] + 175, location[1] - (textOffset * 1.82))
+function getGuesses(attemptsLeft, location, textOffset){
+  let userGuesses = [];
+  let guess;
+  let guessPrompt = ['ENTER PASSWORD >'];
+  if(passwordsPrinted === true && attemptsLeft > 0){
+    displayLine(guessPrompt, location, textOffset);
+      //this.displayLine(this.guessPrompt)
+    let inp = createInput('');
+    inp.position(location[0] + 175, location[1] - (textOffset * 1.82));
+    
+  }
 }
-*/
+
+function keyPressed(attemptsLeft, inp, guess, userGuesses){
+  if(keyIsPressed){
+    if(keyCode === ENTER && attemptsLeft > 0){
+      guess = inp.value()
+      console.log(guess)
+    }
+  }
+}
 
 
 class Passwords{
